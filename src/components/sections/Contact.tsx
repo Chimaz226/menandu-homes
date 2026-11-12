@@ -62,20 +62,20 @@ export function Contact() {
         </Container>
       </section>
 
-      <footer className="bg-brand-primary-dark text-white/80">
+      {/* Light footer so the transparent logo sits directly on the page, with no tile. */}
+      <footer className="border-t border-black/5 bg-white text-brand-ink/70">
         <Container className="flex flex-col gap-8 py-12 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-4">
-            {/* Blue/black logo needs a light tile to read on the dark footer. */}
-            <span className="rounded-xl bg-white p-2">
-              <Image src={company.logo} alt={company.name} width={829} height={457} className="h-12 w-auto" />
-            </span>
-            <p className="max-w-[16rem] text-sm">{company.tagline}</p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+            <a href="#home" aria-label={`${company.name}, back to top`} className="shrink-0">
+              <Image src={company.logo} alt={company.name} width={829} height={457} className="h-20 w-auto sm:h-24" />
+            </a>
+            <p className="max-w-[18rem] text-sm leading-relaxed">{company.tagline}</p>
           </div>
           <nav aria-label="Footer">
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-brand-primary">
               {nav.map((n) => (
                 <li key={n.href}>
-                  <a href={n.href} className="hover:text-white">
+                  <a href={n.href} className="hover:text-brand-primary-light">
                     {n.label}
                   </a>
                 </li>
@@ -83,8 +83,8 @@ export function Contact() {
             </ul>
           </nav>
         </Container>
-        <div className="border-t border-white/10">
-          <Container className="flex flex-col gap-2 py-5 text-xs text-white/60 sm:flex-row sm:justify-between">
+        <div className="bg-brand-primary-dark">
+          <Container className="flex flex-col gap-2 py-5 text-xs text-white/70 sm:flex-row sm:justify-between">
             <p>
               © <Year /> {company.name}. All rights reserved.
               {company.rcNumber && ` RC ${company.rcNumber}.`}

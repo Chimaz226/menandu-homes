@@ -58,7 +58,14 @@ export function Animations() {
         start: "top 96%",
         once: true,
         interval: 0.05,
-        onEnter: (els) => gsap.to(els, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.06, ease: "power2.out", overwrite: true }),
+        onEnter: (els) => {
+          // A fast scroll can pass many triggers at once. Staggering them all would make
+          // on-screen elements queue behind ones already scrolled past, so those are shown
+          // instantly and only what's actually in view animates.
+          const offscreen = (el: Element) => el.getBoundingClientRect().bottom < 0;
+          gsap.set(els.filter(offscreen), { autoAlpha: 1, y: 0, overwrite: true });
+          gsap.to(els.filter((el) => !offscreen(el)), { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.06, ease: "power2.out", overwrite: true });
+        },
       });
 
       gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((group) => {
