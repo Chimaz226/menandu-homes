@@ -14,7 +14,8 @@ npm run build   # production build (page is fully static)
 | **All copy, prices, contacts, FAQ** | `src/content/site.ts` |
 | Brand colours and fonts | `src/app/globals.css` (`@theme`). Tailwind v4 has no `tailwind.config` |
 | Sections (Hero, About, Gallery, Floor Plans, Location, Payment, FAQ, Contact + footer) | `src/components/sections/` |
-| Architectural renders | `src/assets/renders/` (static imports give automatic blur placeholders); wired up in `site.ts` → `renders` |
+| Architectural renders (hero slideshow, About, Gallery) | `src/assets/renders/`, wired up in `site.ts` → `renders`. Static imports give automatic blur placeholders |
+| Plan zoom viewer (pinch / double-tap / wheel) | `src/components/ZoomViewer.tsx` |
 | Reusable "Sold out" ribbon | `SoldOutRibbon` in `src/components/ui.tsx` |
 | Pricing panel (shown in Hero and About) | `src/components/PricingPanel.tsx` |
 | Logo / favicon | `public/brand/menandu-logo.png` (transparent, 829×457), `src/app/favicon.ico` |
@@ -24,17 +25,17 @@ npm run build   # production build (page is fully static)
 
 Empty fields in `site.ts` (`""`, `null`, `[]`) are **hidden** on the page, not shown blank. For example, email buttons, the Instagram link, the map, the delivery date and the RC number only appear once they're filled in.
 
-## Still waiting on the client
+## Client content
 
-Search the code for `TODO(client)`. In summary:
+The client's property profile (Nov 2026) is fully in `site.ts`: the address (Plot 43A, Udeco Medical Road, Chevy View Estate, Chevron), price (₦499m per unit, ₦2.495bn total), the 30/70 payment plan over 5 months and 2 weeks, the location advantage text, contacts (WhatsApp +234 802 233 0096; calls +234 803 321 9596 / +234 812 734 2050), the tagline and slogans.
 
-- Project/estate name (currently the working title "Menandu Terraces"), location tag, full site address, delivery date
-- Unit prices, old prices and availability. Set `availability: "sold-out"` to show the red "Sold out" state
-- Enquiry email, Instagram handle, RC number, year established, office address
-- Payment plan structure and FAQ answers (current text is generic and has no figures)
-- Neighbourhood copy, landmarks, map location
-- Architect confirmation of bed/bath counts and sqm. Once confirmed, set `project.specsConfirmed: true` to remove the disclaimer
-- Vector logo (the transparent PNG has soft edges, so a white version for dark backgrounds isn't possible yet) and a full favicon set (only a 16×16 `.ico` was supplied)
+Unit availability is set per unit (01–05) in `site.ts` → `units`. Mark a unit `"sold-out"` and the pricing panel updates, and the floor-plan "Sold out" ribbon appears once every unit in a view is sold.
+
+**Still missing** (search for `TODO(client)`):
+- Delivery date, enquiry email, Instagram handle, RC number, year established, office address
+- Nearby landmarks for the Location section
+- Confirmed sqm per unit from the architect (room sizes on the plans are measured from the drawings)
+- Vector logo and a full favicon set
 
 ## Floor plans
 

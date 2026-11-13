@@ -27,18 +27,8 @@ export type Render = { src: StaticImageData; alt: string };
 
 export type Availability = "available" | "few-left" | "sold-out";
 
-export type UnitType = {
-  id: string;
-  name: string;
-  /** e.g. "4-bedroom terrace + BQ" */
-  summary: string;
-  unitCount: number;
-  /** Naira, whole numbers. null = "Price on request" */
-  price: number | null;
-  /** Previous price shown struck through. null = hidden */
-  oldPrice: number | null;
-  availability: Availability;
-};
+/** One of the five homes. Unit 01 is the end of the row; 02–05 share a layout. */
+export type Unit = { id: "01" | "02" | "03" | "04" | "05"; type: "end" | "mid"; availability: Availability };
 
 /** "mid" = units 02–05 (identical), "end" = unit 01, "full" = the whole row */
 export type PlanView = "mid" | "end" | "full";
@@ -54,28 +44,30 @@ export type FloorPlan = {
   rooms: Record<Exclude<PlanView, "full">, Room[]>;
 };
 
-const whatsappNumber = "2348127342050"; // +234 812 734 2050, from letterhead
+const whatsappNumber = "2348022330096"; // +234 802 233 0096, from the client's property profile (Nov 2026)
 
 export const site = {
   company: {
     name: "Menandu Homes",
-    tagline: "Affordable Home Developers/Builders, Sales & Lease",
+    tagline: "Luxury Real Estate • Property Development • Investment",
+    slogan: "Your Dream Home. Your Smart Investment.",
     /** Transparent PNG, 829 × 457 */
     logo: "/brand/menandu-logo.png",
-    // TODO(client): RC / registration number — not shown on the letterhead
+    // TODO(client): RC / registration number
     rcNumber: "",
     // TODO(client): year established, shown in the top bar next to the RC number
     established: "",
-    // TODO(client): full office address — letterhead photo cuts it off
+    // TODO(client): office address (project.address is the development site, not the office)
     officeAddress: "",
   },
 
   contact: {
-    phones: ["+234 803 321 9596", "+234 802 233 0096"],
-    whatsappDisplay: "+234 812 734 2050",
+    /** Telephone numbers from the client's property profile */
+    phones: ["+234 803 321 9596", "+234 812 734 2050"],
+    whatsappDisplay: "+234 802 233 0096",
     whatsappNumber,
     whatsappMessage:
-      "Hello Menandu Homes, I'm interested in the 5-unit terrace development. Please send me more details.",
+      "Hello Menandu Homes, I'm interested in the 4-bedroom terrace duplexes at Plot 43A, Chevy View Estate, Chevron. Please send me more details.",
     // TODO(client): enquiry email address — email buttons stay hidden until this is set
     email: "",
     // TODO(client): Instagram handle without the @, e.g. "menanduhomes"
@@ -83,45 +75,52 @@ export const site = {
   },
 
   project: {
-    // TODO(client): project/estate name, if different from the working title
-    name: "Menandu Terraces",
-    // TODO(client): area / city, e.g. "Lekki, Lagos"
-    locationTag: "Location to be announced",
-    headline: "Five terrace homes,\nbuilt for modern family living.",
+    /** Used for the page title, enquiry subjects and structured data */
+    name: "Luxury Terrace Duplexes, Chevy View Estate",
+    presenter: "Menandu Homes presents",
+    title: "Five Exclusive Homes.\nOne Exceptional Address.",
+    subtitle: "Luxury four-bedroom terrace duplexes, each with a Boys' Quarters (BQ).",
+    slogan: "Premium Living. Exceptional Value. A Place to Call Home.",
+    locationTag: "Chevy View Estate, Chevron · Lekki, Lagos",
+    address: "Plot 43A, Udeco Medical Road, Chevy View Estate, Chevron, Eti-Osa LGA, Lagos State, Nigeria",
+    shortAddress: "Plot 43A, Udeco Medical Road, Chevy View Estate, Chevron, Lagos",
     description:
-      "A boutique development of five terrace homes, each with a generous lounge and dining space, a boys' quarters, en-suite bedrooms across two upper floors and dedicated parking.",
+      "An exclusive residential development of five luxury four-bedroom terrace duplexes, each with a Boys' Quarters, combining contemporary architecture, comfort, functionality and elegance.",
     // TODO(client): delivery date, e.g. "Q4 2027"
     deliveryDate: "",
-    // TODO(client): full site address
-    address: "",
-    /** Flip to true once the architect confirms bed/bath counts per unit */
-    specsConfirmed: false,
+    /** Bedroom count and BQ confirmed in the client's property profile */
+    specsConfirmed: true,
   },
 
+  pricing: {
+    product: "4-bedroom terrace duplex + BQ",
+    pricePerUnit: 499_000_000,
+    priceInWords: "Four Hundred and Ninety-Nine Million Naira Only",
+    /** Previous price shown struck through. null = hidden */
+    oldPrice: null as number | null,
+    totalUnits: 5,
+    totalDevelopmentValue: 2_495_000_000,
+  },
+
+  // TODO(client): update availability as units sell ("available" | "few-left" | "sold-out")
   units: [
-    {
-      id: "end",
-      name: "End Terrace",
-      summary: "4 bedrooms + BQ, wider plan",
-      unitCount: 1,
-      price: null, // TODO(client)
-      oldPrice: null,
-      availability: "available", // TODO(client)
-    },
-    {
-      id: "mid",
-      name: "Terrace",
-      summary: "4 bedrooms + BQ, front balconies",
-      unitCount: 4,
-      price: null, // TODO(client)
-      oldPrice: null,
-      availability: "available", // TODO(client)
-    },
-  ] as UnitType[],
+    { id: "01", type: "end", availability: "available" },
+    { id: "02", type: "mid", availability: "available" },
+    { id: "03", type: "mid", availability: "available" },
+    { id: "04", type: "mid", availability: "available" },
+    { id: "05", type: "mid", availability: "available" },
+  ] as Unit[],
 
   /** Architectural renders supplied by the client (also kept in _assets/renders). */
   renders: {
-    hero: { src: cornerView, alt: "Three-storey terrace development seen from the corner of unit 01, with grey fluted cladding and lit balconies" },
+    /** Hero slideshow, in order. `position` is the CSS object-position used when cropping. */
+    hero: [
+      { src: cornerView, alt: "Three-storey terrace development seen from the corner of unit 01, with grey fluted cladding and lit balconies", position: "70% center" },
+      { src: frontElevation, alt: "Front elevation of units 02 to 05 with glass-balustrade balconies", position: "center" },
+      { src: aerialView, alt: "Aerial view of the five homes and the gated, paved parking forecourt", position: "center" },
+      { src: endUnit05, alt: "View along the terrace from unit 05", position: "60% center" },
+      { src: cornerCloseup, alt: "Fluted cladding and warm-lit balconies at unit 01", position: "65% center" },
+    ],
     about: [
       { src: aerialView, alt: "Aerial view of the five terrace homes with a paved, gated parking forecourt" },
       { src: frontElevation, alt: "Front elevation of units 02 to 05, each with glass-balustrade balconies on two floors" },
@@ -134,20 +133,30 @@ export const site = {
       { src: cornerCloseup, alt: "Close-up of the fluted cladding and balconies at unit 01" },
       { src: endUnit05, alt: "View along the terrace from unit 05" },
     ],
-  } satisfies { hero: Render; about: Render[]; gallery: Render[] },
+  } satisfies { hero: (Render & { position: string })[]; about: Render[]; gallery: Render[] },
 
   about: {
-    eyebrow: "The Residence",
-    heading: "Space for every part of family life.",
+    eyebrow: "Property Profile",
+    heading: "Premium living. Exceptional value.",
     paragraphs: [
-      "Each home is arranged over three floors. The ground floor is given to living: an open lounge and dining area, a kitchen, a guest toilet and a self-contained boys' quarters with its own toilet.",
-      "Upstairs, four bedrooms are split across the first and second floors, each with its own toilet, including a master bedroom on the second floor. Front bedrooms open onto glass-balustrade balconies under warm timber-lined soffits.",
+      "Menandu Homes proudly presents an exclusive residential development comprising five (5) units of luxury four-bedroom terrace duplexes, each with a Boys' Quarters (BQ), at Plot 43A, Udeco Medical Road, Chevy View Estate, Chevron, Eti-Osa Local Government Area, Lagos State.",
+      "Designed to combine contemporary architecture, comfort, functionality and elegance, this development offers an exceptional opportunity for homeowners and property investors seeking premium residential accommodation in a desirable location.",
+      "Each home rises over three floors: open lounge and dining, kitchen, guest toilet and the BQ on the ground floor, with four bedrooms, including the master bedroom, across the two floors above.",
     ],
     highlights: [
-      { value: "5", label: "Homes in the development" },
-      { value: "4", label: "Bedrooms per home" },
+      { value: "5", label: "Exclusive units" },
+      { value: "4", label: "Bedrooms per unit" },
+      { value: "1", label: "Boys' Quarters per unit" },
       { value: "3", label: "Floors per home" },
-      { value: "7", label: "Parking spaces on site" },
+    ],
+    detailsHeading: "Property details",
+    details: [
+      { label: "Development", value: "Five (5) units of terrace duplexes" },
+      { label: "Bedrooms", value: "Four (4) bedrooms per unit" },
+      { label: "Additional accommodation", value: "Boys' Quarters (BQ)" },
+      { label: "Property type", value: "Luxury residential development" },
+      { label: "Plot number", value: "43A" },
+      { label: "Location", value: "Udeco Medical Road, Chevy View Estate, Chevron, Eti-Osa LGA, Lagos State" },
     ],
   },
 
@@ -165,10 +174,10 @@ export const site = {
       "Three floors per home across a 34m × 8m building. Units 02–05 share one layout; unit 01 at the end of the row has a wider plan with a side terrace.",
     note: "Room sizes are approximate, measured from the architectural drawings.",
     views: [
-      { id: "mid", label: "Terrace home", sub: "Units 02–05", unitId: "mid" },
-      { id: "end", label: "End home", sub: "Unit 01", unitId: "end" },
-      { id: "full", label: "Whole terrace", sub: "All five homes", unitId: null },
-    ] as { id: PlanView; label: string; sub: string; /** links to units[].id for the sold-out ribbon */ unitId: string | null }[],
+      { id: "mid", label: "Terrace home", sub: "Units 02–05", unitIds: ["02", "03", "04", "05"] },
+      { id: "end", label: "End home", sub: "Unit 01", unitIds: ["01"] },
+      { id: "full", label: "Whole terrace", sub: "All five homes", unitIds: [] },
+    ] as { id: PlanView; label: string; sub: string; /** sold-out ribbon shows when all of these units are sold */ unitIds: Unit["id"][] }[],
     plans: [
       {
         id: "ground",
@@ -238,64 +247,77 @@ export const site = {
   },
 
   location: {
-    eyebrow: "Location",
-    heading: "Where you'll live",
-    // TODO(client): a short paragraph about the neighbourhood
-    description:
-      "Full address and neighbourhood details are coming soon. Message us on WhatsApp for the site location and to arrange an inspection.",
+    eyebrow: "Location Advantage",
+    heading: "A desirable address on the Chevron–Lekki corridor",
+    paragraphs: [
+      "Strategically situated at Plot 43A, Udeco Medical Road, within Chevy View Estate, Chevron, this development enjoys a desirable residential address in the Eti-Osa axis of Lagos.",
+      "Its location within the wider Chevron–Lekki corridor makes it an attractive choice for families, professionals and property investors seeking quality residential accommodation and long-term property value.",
+    ],
+    tags: ["Chevy View Estate", "Chevron–Lekki corridor", "Eti-Osa LGA, Lagos", "Long-term property value"],
     // TODO(client): nearby landmarks with rough travel times, e.g. { name: "Shoprite", distance: "5 min drive" }
     landmarks: [] as { name: string; distance: string }[],
-    // TODO(client): Google Maps embed query (address or "lat,lng"). Empty = map hidden.
-    mapQuery: "",
+    /** Google Maps search used for the embedded map */
+    mapQuery: "Udeco Medical Road, Chevy View Estate, Chevron, Lekki, Lagos, Nigeria",
   },
 
   payment: {
-    eyebrow: "Payment Plan",
-    heading: "Flexible ways to own your home",
-    intro:
-      "Outright and instalment options are available. Full payment terms will be confirmed on enquiry.",
-    // TODO(client): real payment structure. Placeholder steps below describe the
-    // purchase process only and contain no figures.
+    eyebrow: "Flexible Payment Plan",
+    heading: "Own your home in 5 months and 2 weeks",
+    intro: "Menandu Homes offers a flexible payment arrangement to make property ownership more convenient for prospective buyers.",
+    duration: "5 months and 2 weeks",
+    breakdown: [
+      { label: "Initial deposit", percent: 30, amount: 149_700_000 },
+      { label: "Outstanding balance", percent: 70, amount: 349_300_000 },
+    ],
+    total: 499_000_000,
+    note: "The initial deposit of 30% secures the purchase, while the outstanding 70% balance is payable over a period of 5 months and 2 weeks from the date of the initial deposit.",
     steps: [
-      { title: "Enquire", text: "Message us on WhatsApp to request the price list and payment terms." },
-      { title: "Inspect", text: "Book a visit to the site and review the floor plans with our team." },
-      { title: "Reserve", text: "Secure your preferred unit with an initial deposit." },
-      { title: "Complete", text: "Pay the balance outright or on an agreed instalment plan." },
+      { title: "Enquire & inspect", text: "Call or WhatsApp us to arrange a property inspection at Chevy View Estate." },
+      { title: "Pay 30% deposit", text: "An initial deposit of ₦149,700,000 secures your unit." },
+      { title: "Spread the balance", text: "Pay the 70% balance of ₦349,300,000 over 5 months and 2 weeks." },
+      { title: "Own your home", text: "Complete the ₦499,000,000 purchase and take ownership." },
     ],
   },
 
   faq: {
     eyebrow: "FAQ",
     heading: "Frequently asked questions",
-    // TODO(client): confirm or replace these answers
     items: [
       {
-        q: "How many bedrooms does each home have?",
-        a: "Each home has four bedrooms, each with its own toilet, plus a boys' quarters with its own toilet on the ground floor. Final specifications will be confirmed by the architect.",
+        q: "How much does a unit cost?",
+        a: "Each unit is ₦499,000,000 (Four Hundred and Ninety-Nine Million Naira Only).",
+      },
+      {
+        q: "What is the payment plan?",
+        a: "A 30% initial deposit of ₦149,700,000 secures the purchase. The outstanding 70% balance of ₦349,300,000 is payable over 5 months and 2 weeks from the date of the initial deposit.",
+      },
+      {
+        q: "Where is the development?",
+        a: "Plot 43A, Udeco Medical Road, Chevy View Estate, Chevron, Eti-Osa Local Government Area, Lagos State, within the Chevron–Lekki corridor.",
+      },
+      {
+        q: "What does each home include?",
+        a: "Each unit is a luxury terrace duplex with four bedrooms and a Boys' Quarters (BQ), arranged over three floors with a lounge and dining area, kitchen and guest toilet on the ground floor.",
+      },
+      {
+        q: "How many units are there?",
+        a: "Five units in total. Contact us to check which units are still available.",
       },
       {
         q: "Is there parking?",
-        a: "Yes. The site plan provides off-street parking spaces within the compound.",
+        a: "Yes. The site plan provides off-street parking within the gated compound.",
       },
       {
-        q: "Can I pay in instalments?",
-        a: "Yes, instalment plans are available. Contact us on WhatsApp for the current payment terms.",
-      },
-      {
-        q: "Can I inspect the site?",
-        a: "Yes. Message us on WhatsApp or call to book an inspection.",
-      },
-      {
-        q: "Do you also lease properties?",
-        a: "Yes. Menandu Homes handles development, sales and leasing. Ask us about lease options.",
+        q: "Can I inspect the property?",
+        a: "Yes. Call +234 803 321 9596 or +234 812 734 2050, or WhatsApp +234 802 233 0096, to arrange an inspection, reservation or purchase.",
       },
     ],
   },
 
   contactSection: {
-    eyebrow: "Contact",
-    heading: "Let's talk about your new home",
-    text: "Our team is available to answer questions, share the price list and arrange site inspections.",
+    eyebrow: "Contact Menandu Homes",
+    heading: "Your dream home. Your smart investment.",
+    text: "For enquiries, property inspections, reservations and purchase arrangements, call or WhatsApp our team.",
   },
 };
 

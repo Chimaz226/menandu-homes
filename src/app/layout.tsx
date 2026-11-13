@@ -7,10 +7,11 @@ import "./globals.css";
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"], weight: ["600", "700", "800"] });
 
-const ogImage = { url: site.renders.hero.src.src, width: site.renders.hero.src.width, height: site.renders.hero.src.height, alt: site.renders.hero.alt };
+const hero = site.renders.hero[0];
+const ogImage = { url: hero.src.src, width: hero.src.width, height: hero.src.height, alt: hero.alt };
 
-const title = `${site.project.name} by ${site.company.name}`;
-const description = site.project.description;
+const title = `${site.company.name} | Luxury 4-Bedroom Terrace Duplexes, Chevy View Estate, Chevron`;
+const description = `${site.project.description} Plot 43A, Udeco Medical Road, Chevy View Estate, Chevron, Lagos. ₦499,000,000 per unit, 30% deposit with the balance over 5 months and 2 weeks.`;
 
 export const metadata: Metadata = {
   // TODO: set to the production domain once confirmed, e.g. new URL("https://menanduhomes.com")

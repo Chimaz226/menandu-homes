@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { site } from "@/content/site";
+import { formatNaira, site } from "@/content/site";
 import { PricingPanel } from "../PricingPanel";
 import { Reveal } from "../Reveal";
 import { Container, SectionHeading } from "../ui";
 
 export function About() {
-  const { about, renders } = site;
+  const { about, renders, pricing } = site;
   return (
     <section id="about" className="overflow-hidden py-20 lg:py-28">
       <Container>
@@ -50,9 +50,28 @@ export function About() {
           </div>
         </div>
 
-        <Reveal className="mt-14">
-          <PricingPanel className="mx-auto max-w-3xl" />
-        </Reveal>
+        <div className="mt-14 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+          <Reveal className="rounded-3xl bg-brand-surface p-6 sm:p-8">
+            <h3 className="font-display text-xl font-bold text-brand-primary">{about.detailsHeading}</h3>
+            <dl className="mt-4 divide-y divide-black/10">
+              {about.details.map((d) => (
+                <div key={d.label} className="grid gap-1 py-3 sm:grid-cols-[12rem_1fr] sm:gap-4">
+                  <dt className="text-sm text-brand-ink/60">{d.label}</dt>
+                  <dd className="font-medium text-brand-ink">{d.value}</dd>
+                </div>
+              ))}
+              <div className="grid gap-1 py-3 sm:grid-cols-[12rem_1fr] sm:gap-4">
+                <dt className="text-sm text-brand-ink/60">Total development value</dt>
+                <dd className="font-medium text-brand-ink">
+                  {formatNaira(pricing.totalDevelopmentValue)} <span className="text-sm text-brand-ink/50">({pricing.totalUnits} units)</span>
+                </dd>
+              </div>
+            </dl>
+          </Reveal>
+          <Reveal className="self-start">
+            <PricingPanel />
+          </Reveal>
+        </div>
       </Container>
     </section>
   );

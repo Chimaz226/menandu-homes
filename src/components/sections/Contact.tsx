@@ -46,6 +46,15 @@ export function Contact() {
                   </a>
                 </li>
               ))}
+              <li className="flex items-center gap-4 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 sm:col-span-2">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
+                  <PinIcon />
+                </span>
+                <span>
+                  <span className="block text-xs font-semibold uppercase tracking-wider text-brand-ink/50">Property address</span>
+                  <span className="block font-semibold text-brand-primary">{site.project.address}</span>
+                </span>
+              </li>
               {company.officeAddress && (
                 <li className="flex items-center gap-4 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 sm:col-span-2">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
@@ -69,7 +78,10 @@ export function Contact() {
             <span className="rounded-xl bg-white p-2">
               <Image src={company.logo} alt={company.name} width={829} height={457} className="h-12 w-auto" />
             </span>
-            <p className="max-w-[16rem] text-sm">{company.tagline}</p>
+            <div className="max-w-[18rem]">
+              <p className="font-display font-bold text-white">{company.slogan}</p>
+              <p className="mt-1 text-xs text-white/60">{company.tagline}</p>
+            </div>
           </div>
           <nav aria-label="Footer">
             <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">

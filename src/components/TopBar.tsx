@@ -1,6 +1,6 @@
-import { site, telUrl } from "@/content/site";
+import { site, telUrl, whatsappUrl } from "@/content/site";
 import { Container } from "./ui";
-import { InstagramIcon, MailIcon, PhoneIcon } from "./icons";
+import { InstagramIcon, MailIcon, PhoneIcon, WhatsAppIcon } from "./icons";
 
 export function TopBar() {
   const { contact, company } = site;
@@ -24,6 +24,12 @@ export function TopBar() {
             <a href={telUrl(contact.phones[0])} className="inline-flex items-center gap-2 hover:text-white">
               <PhoneIcon width={14} height={14} />
               {contact.phones[0]}
+            </a>
+          </li>
+          <li>
+            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white">
+              <WhatsAppIcon width={14} height={14} />
+              {contact.whatsappDisplay}
             </a>
           </li>
           {contact.instagram && (

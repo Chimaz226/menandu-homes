@@ -3,10 +3,11 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Image from "next/image";
-import { useRef, useState, type KeyboardEvent, type TouchEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type TouchEvent } from "react";
 import { site, whatsappUrl, type PlanView } from "@/content/site";
 import { ChevronDownIcon, CloseIcon, WhatsAppIcon } from "../icons";
 import { SitePlan } from "../SitePlan";
+import { ZoomViewer } from "../ZoomViewer";
 import { Container, SectionHeading, SoldOutRibbon } from "../ui";
 
 gsap.registerPlugin(useGSAP);
@@ -78,7 +79,26 @@ export function FloorPlans() {
 
   const plan = floorPlans.plans.find((p) => p.id === tab);
   const viewMeta = floorPlans.views.find((v) => v.id === view)!;
-  const soldOut = !!plan && viewMeta.unitId !== null && units.find((u) => u.id === viewMeta.unitId)?.availability === "sold-out";
+  // Ribbon only when every unit shown in this view is sold.
+  const soldOut =
+    !!plan && viewMeta.unitIds.length > 0 && viewMeta.unitIds.every((id) => units.find((u) => u.id === id)?.availability === "sold-out");
+  const [zoomOpen, setZoomOpen] = useState(false);
+
+  // Lock page scroll behind the full-screen viewer (a modal <dialog> doesn't on iOS).
+  useEffect(() => {
+    if (!zoomOpen) return;
+    const html = document.documentElement;
+    const prev = html.style.overflow;
+    html.style.overflow = "hidden";
+    return () => {
+      html.style.overflow = prev;
+    };
+  }, [zoomOpen]);
+
+  const openZoom = () => {
+    setZoomOpen(true);
+    dialog.current?.showModal();
+  };
   const wide = tab === "site" || view === "full";
   const rooms = plan ? plan.rooms[view === "end" ? "end" : "mid"] : siteFacts;
   const image = plan?.images[view];
@@ -207,7 +227,11 @@ export function FloorPlans() {
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
           >
-            <div data-plan-image className={`relative flex items-center justify-center ${wide ? "" : "h-[340px] sm:h-[480px] lg:h-[540px]"}`}>
+            <div
+              data-plan-image
+              onClick={tab !== "site" ? openZoom : undefined}
+              className={`relative flex items-center justify-center ${tab !== "site" ? "cursor-zoom-in" : ""} ${wide ? "" : "h-[340px] sm:h-[480px] lg:h-[540px]"}`}
+            >
               {tab === "site" ? (
                 <SitePlan className="h-auto w-full" />
               ) : (
@@ -225,13 +249,13 @@ export function FloorPlans() {
             {tab !== "site" && (
               <button
                 type="button"
-                onClick={() => dialog.current?.showModal()}
+                onClick={openZoom}
                 className="absolute right-3 top-3 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-xs font-semibold text-brand-primary shadow ring-1 ring-black/10 backdrop-blur hover:bg-white sm:right-4 sm:top-4"
               >
                 <ZoomIcon /> Enlarge
               </button>
             )}
-            <p className="mt-2 text-center text-[11px] text-brand-ink/40 lg:hidden">Swipe the drawing to change floor</p>
+            <p className="mt-2 text-center text-[11px] text-brand-ink/40 lg:hidden">Tap to enlarge · swipe to change floor</p>
           </div>
 
           {/* Room schedule */}
@@ -302,31 +326,26 @@ export function FloorPlans() {
         </nav>
       </Container>
 
-      {/* Full-resolution viewer: scroll/pan for the whole-terrace drawings. */}
+      {/* Full-screen zoom viewer: opens fitted to the screen, then pinch / double-tap / wheel to zoom in. */}
       <dialog
         ref={dialog}
+        onClose={() => setZoomOpen(false)}
         onClick={(e) => e.target === e.currentTarget && dialog.current?.close()}
-        className="m-auto h-[92vh] max-h-none w-[96vw] max-w-none overflow-hidden rounded-2xl bg-white p-0 backdrop:bg-black/80"
+        className="m-0 h-dvh max-h-none w-screen max-w-none overflow-hidden bg-white p-0 backdrop:bg-black/80 sm:m-auto sm:h-[92vh] sm:w-[96vw] sm:rounded-2xl"
         aria-label="Enlarged floor plan"
       >
         <div className="flex h-full flex-col">
-          <div className="flex items-center justify-between border-b border-black/10 px-5 py-3">
-            <p className="font-display font-bold text-brand-primary">
+          <div className="flex items-center justify-between gap-3 border-b border-black/10 px-4 py-2.5 sm:px-5 sm:py-3">
+            <p className="min-w-0 truncate font-display font-bold text-brand-primary">
               {plan?.title} · {viewMeta.label}
+              <span className="ml-2 hidden text-xs font-medium text-brand-ink/50 sm:inline">{viewMeta.sub}</span>
             </p>
             <button type="button" onClick={() => dialog.current?.close()} className="rounded-full p-2 text-brand-primary hover:bg-brand-surface" aria-label="Close">
               <CloseIcon />
             </button>
           </div>
-          <div className="flex-1 overflow-auto p-4">
-            {image && (
-              <Image
-                src={image}
-                alt={`${plan!.title} plan, enlarged`}
-                sizes="1700px"
-                className={view === "full" ? "h-auto w-[1700px] max-w-none" : "mx-auto h-full w-auto max-w-none"}
-              />
-            )}
+          <div className="relative min-h-0 flex-1">
+            {zoomOpen && image && <ZoomViewer key={`${tab}-${view}`} image={image} alt={`${plan!.title} plan, ${viewMeta.label.toLowerCase()}, enlarged`} />}
           </div>
         </div>
       </dialog>

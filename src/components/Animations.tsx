@@ -11,7 +11,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
  * Site-wide GSAP motion, driven by data attributes so section components stay
  * server-rendered:
  *
- *   data-hero-bg       hero image: slow zoom-out on load, parallax on scroll
+ *   data-hero-bg       hero slideshow layer: parallax on scroll (the slideshow does its own Ken Burns)
  *   data-hero-item     hero copy: staggered rise on load
  *   data-hero-panel    hero pricing card: rises in after the copy
  *   data-reveal        fades/rises in when scrolled into view (batched)
@@ -38,7 +38,6 @@ export function Animations() {
       /* Hero */
       gsap
         .timeline({ defaults: { ease: "power3.out" } })
-        .from("[data-hero-bg]", { scale: 1.18, duration: 2.4, ease: "power2.out" }, 0)
         .fromTo("[data-hero-item]", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.06 }, 0.1)
         .fromTo("[data-hero-panel]", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 0.4);
 
