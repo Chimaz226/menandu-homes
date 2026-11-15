@@ -4,7 +4,7 @@ import { HeroSlideshow } from "../HeroSlideshow";
 import { PricingPanel } from "../PricingPanel";
 import { Container, EmailButton, WhatsAppButton } from "../ui";
 
-/** Full-bleed render slideshow with copy and pricing overlaid. Motion hooks (data-hero-*) are driven by Animations.tsx. */
+/** Full-bleed render slideshow with copy and pricing overlaid. Copy is never animated in, so it paints instantly; data-hero-bg gets a scroll parallax from Animations.tsx. */
 export function Hero() {
   const { project, renders } = site;
   return (
@@ -18,25 +18,25 @@ export function Hero() {
 
       <Container className="grid gap-10 pb-16 pt-28 lg:grid-cols-[1.15fr_1fr] lg:items-end lg:pb-20">
         <div className="text-white">
-          <p data-hero-item className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold ring-1 ring-white/25 backdrop-blur">
+          <p className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold ring-1 ring-white/25 backdrop-blur">
             <span className="h-2 w-2 rounded-full bg-brand-accent" aria-hidden />
             {project.locationTag}
           </p>
           {/* The h1 carries the search phrase visibly (small line) plus the client's headline. */}
-          <h1 data-hero-item>
+          <h1>
             <span className="block text-xs font-semibold uppercase leading-relaxed tracking-[0.2em] text-brand-accent sm:text-sm">{project.seoHeading}</span>
             <span className="mt-3 block whitespace-pre-line font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
               {project.title}
             </span>
           </h1>
-          <p data-hero-item className="mt-5 font-display text-lg font-bold leading-snug sm:text-xl">
+          <p className="mt-5 font-display text-lg font-bold leading-snug sm:text-xl">
             {project.subtitle}
           </p>
-          <p data-hero-item className="mt-2 max-w-xl leading-relaxed text-white/80">
+          <p className="mt-2 max-w-xl leading-relaxed text-white/80">
             {project.slogan}
           </p>
 
-          <ul data-hero-item className="mt-6 space-y-2 text-sm text-white/90">
+          <ul className="mt-6 space-y-2 text-sm text-white/90">
             <li className="flex items-start gap-2">
               <PinIcon className="mt-0.5 shrink-0 text-brand-accent" /> {project.shortAddress}
             </li>
@@ -47,13 +47,13 @@ export function Hero() {
             )}
           </ul>
 
-          <div data-hero-item className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <WhatsAppButton />
             <EmailButton invert />
           </div>
         </div>
 
-        <div data-hero-panel className="w-full max-w-md lg:justify-self-end">
+        <div className="w-full max-w-md lg:justify-self-end">
           <PricingPanel />
         </div>
       </Container>

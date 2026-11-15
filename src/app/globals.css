@@ -40,7 +40,7 @@ html {
  * is ever hidden.
  */
 @media (prefers-reduced-motion: no-preference) {
-  .js:not(.gsap):not(.no-anim) :is([data-reveal], [data-hero-item], [data-hero-panel], [data-stagger] > *) {
+  .js:not(.gsap):not(.no-anim) :is([data-reveal], [data-stagger] > *) {
     visibility: hidden;
   }
 }

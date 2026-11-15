@@ -12,8 +12,6 @@ gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
  * server-rendered:
  *
  *   data-hero-bg       hero slideshow layer: parallax on scroll (the slideshow does its own Ken Burns)
- *   data-hero-item     hero copy: staggered rise on load
- *   data-hero-panel    hero pricing card: rises in after the copy
  *   data-reveal        fades/rises in when scrolled into view (batched)
  *   data-stagger       children rise in one after another
  *   data-split         heading lines slide up from a mask (SplitText)
@@ -35,12 +33,8 @@ export function Animations() {
       if (root.classList.contains("no-anim")) return;
       root.classList.add("gsap");
 
-      /* Hero */
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .fromTo("[data-hero-item]", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.06 }, 0.1)
-        .fromTo("[data-hero-panel]", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 0.4);
-
+      /* Hero: no intro fade. The headline and price must paint instantly as plain HTML
+         (slow phones, Core Web Vitals); the slideshow provides the motion. */
       gsap.to("[data-hero-bg]", {
         yPercent: 14,
         ease: "none",
