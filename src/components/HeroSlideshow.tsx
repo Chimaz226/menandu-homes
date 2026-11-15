@@ -20,7 +20,8 @@ const INTERVAL_MS = 6000;
  */
 export function HeroSlideshow({ slides }: { slides: Slide[] }) {
   const [index, setIndex] = useState(0);
-  const [mounted, setMounted] = useState(() => new Set([0, 1]));
+  // Only the first slide loads up front; the next one is fetched once the page has finished loading.
+  const [mounted, setMounted] = useState(() => new Set([0]));
   const [hidden, setHidden] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const n = slides.length;
@@ -38,6 +39,16 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, hidden]);
+
+  useEffect(() => {
+    const preloadNext = () => setMounted((m) => (m.has(1) ? m : new Set([...m, 1])));
+    if (document.readyState === "complete") {
+      const t = setTimeout(preloadNext, 1200);
+      return () => clearTimeout(t);
+    }
+    window.addEventListener("load", preloadNext, { once: true });
+    return () => window.removeEventListener("load", preloadNext);
+  }, []);
 
   useEffect(() => {
     const onVis = () => setHidden(document.hidden);
@@ -75,7 +86,7 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.fromTo(`[data-slide="${index}"] img`, { scale: 1.12 }, { scale: 1, duration: INTERVAL_MS / 1000 + 1.5, ease: "none" });
+        gsap.fromTo(`[data-slide="${index}"] img`, { scale: 1.05 }, { scale: 1, duration: INTERVAL_MS / 1000 + 1.5, ease: "none" });
       });
     },
     { scope: root, dependencies: [index], revertOnUpdate: true },
@@ -99,6 +110,7 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
                 preload={i === 0}
                 placeholder="blur"
                 sizes="100vw"
+                quality={90}
                 className="object-cover"
                 style={{ objectPosition: s.position }}
               />

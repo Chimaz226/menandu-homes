@@ -81,6 +81,19 @@ export function Contact() {
             <div className="max-w-[18rem]">
               <p className="font-display font-bold text-white">{company.slogan}</p>
               <p className="mt-1 text-xs text-white/60">{company.tagline}</p>
+              {/* Name, address and phone, consistent with Google listings: helps local search. */}
+              <address className="mt-3 text-xs not-italic leading-relaxed text-white/70">
+                {site.project.address}
+                <br />
+                {contact.phones.map((p, i) => (
+                  <span key={p}>
+                    {i > 0 && " · "}
+                    <a href={telUrl(p)} className="hover:text-white">
+                      {p}
+                    </a>
+                  </span>
+                ))}
+              </address>
             </div>
           </div>
           <nav aria-label="Footer">

@@ -52,10 +52,11 @@ export function Gallery() {
               >
                 <Image
                   src={img.src}
-                  alt=""
+                  alt={img.alt}
                   fill
                   placeholder="blur"
                   sizes={i === 0 ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, 50vw"}
+                  quality={90}
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </button>
@@ -73,7 +74,7 @@ export function Gallery() {
       >
         {current && (
           <figure className="relative flex w-screen max-w-6xl flex-col items-center px-4">
-            <Image src={current.src} alt={current.alt} sizes="100vw" className="max-h-[80vh] w-auto rounded-xl object-contain" />
+            <Image src={current.src} alt={current.alt} sizes="100vw" quality={90} className="max-h-[80vh] w-auto rounded-xl object-contain" />
             <figcaption className="mt-3 text-center text-sm text-white/80">
               {current.alt} · {(index ?? 0) + 1}/{images.length}
             </figcaption>

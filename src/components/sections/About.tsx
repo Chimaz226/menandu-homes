@@ -43,7 +43,7 @@ export function About() {
                 className={`relative aspect-[4/5] overflow-hidden rounded-3xl shadow-lg ring-1 ring-black/5 ${i === 1 ? "mt-12" : ""}`}
               >
                 <div data-parallax={i === 0 ? 8 : 14} className="absolute inset-x-0 -inset-y-[15%]">
-                  <Image src={r.src} alt={r.alt} fill placeholder="blur" sizes="(min-width: 1024px) 28vw, 50vw" className="object-cover" />
+                  <Image src={r.src} alt={r.alt} fill placeholder="blur" sizes="(min-width: 1024px) 28vw, 50vw" quality={90} className="object-cover" />
                 </div>
               </div>
             ))}

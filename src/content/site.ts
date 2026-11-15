@@ -51,8 +51,10 @@ export const site = {
     name: "Menandu Homes",
     tagline: "Luxury Real Estate • Property Development • Investment",
     slogan: "Your Dream Home. Your Smart Investment.",
-    /** Transparent PNG, 829 × 457 */
-    logo: "/brand/menandu-logo.png",
+    /** Vector logo (829 × 457 aspect), rebuilt from the client PNG; source in _assets/logo-source/ */
+    logo: "/brand/menandu-logo.svg",
+    /** Raster copy (rendered from the SVG) for search engines and social cards */
+    logoPng: "/brand/menandu-logo.png",
     // TODO(client): RC / registration number
     rcNumber: "",
     // TODO(client): year established, shown in the top bar next to the RC number
@@ -78,6 +80,8 @@ export const site = {
     /** Used for the page title, enquiry subjects and structured data */
     name: "Luxury Terrace Duplexes, Chevy View Estate",
     presenter: "Menandu Homes presents",
+    /** Visible first line of the page's h1: the phrase people search for */
+    seoHeading: "4-Bedroom Terrace Duplexes for Sale in Chevron, Lekki",
     title: "Five Exclusive Homes.\nOne Exceptional Address.",
     subtitle: "Luxury four-bedroom terrace duplexes, each with a Boys' Quarters (BQ).",
     slogan: "Premium Living. Exceptional Value. A Place to Call Home.",
@@ -115,9 +119,9 @@ export const site = {
   renders: {
     /** Hero slideshow, in order. `position` is the CSS object-position used when cropping. */
     hero: [
-      { src: cornerView, alt: "Three-storey terrace development seen from the corner of unit 01, with grey fluted cladding and lit balconies", position: "70% center" },
-      { src: frontElevation, alt: "Front elevation of units 02 to 05 with glass-balustrade balconies", position: "center" },
-      { src: aerialView, alt: "Aerial view of the five homes and the gated, paved parking forecourt", position: "center" },
+      { src: cornerView, alt: "4-bedroom terrace duplexes for sale in Chevy View Estate, Chevron, Lekki: corner view of unit 01", position: "70% center" },
+      { src: frontElevation, alt: "Front elevation of terrace duplexes 02 to 05 with glass balconies, Chevron, Lekki", position: "center" },
+      { src: aerialView, alt: "Aerial view of the five terrace duplexes and gated parking at Plot 43A, Chevy View Estate, Lagos", position: "center" },
       { src: endUnit05, alt: "View along the terrace from unit 05", position: "60% center" },
       { src: cornerCloseup, alt: "Fluted cladding and warm-lit balconies at unit 01", position: "65% center" },
     ],
@@ -126,12 +130,12 @@ export const site = {
       { src: frontElevation, alt: "Front elevation of units 02 to 05, each with glass-balustrade balconies on two floors" },
     ],
     gallery: [
-      { src: cornerView, alt: "Corner view of the development from unit 01" },
-      { src: frontElevation, alt: "Front elevation of units 02 to 05" },
-      { src: aerialView, alt: "Aerial view of the development and parking forecourt" },
-      { src: endUnit01, alt: "Street-facing side of end unit 01" },
-      { src: cornerCloseup, alt: "Close-up of the fluted cladding and balconies at unit 01" },
-      { src: endUnit05, alt: "View along the terrace from unit 05" },
+      { src: cornerView, alt: "Corner view of the 4-bedroom terrace duplexes from unit 01, Chevy View Estate, Chevron" },
+      { src: frontElevation, alt: "Front elevation of terrace duplexes 02 to 05, Chevron, Lekki" },
+      { src: aerialView, alt: "Aerial view of the terrace duplex development and parking forecourt, Chevy View Estate, Lagos" },
+      { src: endUnit01, alt: "Street-facing side of end unit 01, a 4-bedroom duplex with BQ in Chevron, Lekki" },
+      { src: cornerCloseup, alt: "Close-up of the fluted cladding and balconies of the Chevron terrace duplexes" },
+      { src: endUnit05, alt: "View along the five terrace duplexes from unit 05, Chevy View Estate, Lekki" },
     ],
   } satisfies { hero: (Render & { position: string })[]; about: Render[]; gallery: Render[] },
 
@@ -162,13 +166,13 @@ export const site = {
 
   gallery: {
     eyebrow: "Gallery",
-    heading: "See the homes",
+    heading: "Photos of the terrace duplexes",
     note: "Architectural renders. Final finishes may vary.",
   },
 
   floorPlans: {
     eyebrow: "The Layout",
-    heading: "Floor plans",
+    heading: "4-bedroom duplex floor plans",
     // TODO(client): add confirmed sqm per home type from the architect
     summary:
       "Three floors per home across a 34m × 8m building. Units 02–05 share one layout; unit 01 at the end of the row has a wider plan with a side terrace.",
@@ -290,6 +294,14 @@ export const site = {
       {
         q: "What is the payment plan?",
         a: "A 30% initial deposit of ₦149,700,000 secures the purchase. The outstanding 70% balance of ₦349,300,000 is payable over 5 months and 2 weeks from the date of the initial deposit.",
+      },
+      {
+        q: "Are the homes for sale or for rent?",
+        a: "For sale. All five 4-bedroom terrace duplexes are being sold by Menandu Homes, with a flexible payment plan.",
+      },
+      {
+        q: "Is Chevy View Estate in Lekki?",
+        a: "Chevy View Estate is in the Chevron area of Eti-Osa, Lagos, within the wider Chevron–Lekki corridor.",
       },
       {
         q: "Where is the development?",

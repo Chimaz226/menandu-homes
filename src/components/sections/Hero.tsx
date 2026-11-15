@@ -22,11 +22,12 @@ export function Hero() {
             <span className="h-2 w-2 rounded-full bg-brand-accent" aria-hidden />
             {project.locationTag}
           </p>
-          <p data-hero-item className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-accent">
-            {project.presenter}
-          </p>
-          <h1 data-hero-item className="mt-3 whitespace-pre-line font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-            {project.title}
+          {/* The h1 carries the search phrase visibly (small line) plus the client's headline. */}
+          <h1 data-hero-item>
+            <span className="block text-xs font-semibold uppercase leading-relaxed tracking-[0.2em] text-brand-accent sm:text-sm">{project.seoHeading}</span>
+            <span className="mt-3 block whitespace-pre-line font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+              {project.title}
+            </span>
           </h1>
           <p data-hero-item className="mt-5 font-display text-lg font-bold leading-snug sm:text-xl">
             {project.subtitle}
