@@ -23,14 +23,14 @@
 html {
   scroll-behavior: smooth;
   /* Sticky nav height: the single source for everything that sits under the nav. */
-  --nav-h: 84px;
+  --nav-h: 96px;
   /* top bar is not sticky; anchors land just below the nav */
   scroll-padding-top: calc(var(--nav-h) + 8px);
 }
 
 @media (min-width: 640px) {
   html {
-    --nav-h: 92px;
+    --nav-h: 112px;
   }
 }
 

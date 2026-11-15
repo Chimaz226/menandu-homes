@@ -30,7 +30,7 @@ const siteFacts = [
 ];
 
 /** Live height of the sticky nav (CSS var --nav-h in globals.css); the control bar pins just below it. */
-const navHeight = () => document.querySelector("header")?.offsetHeight ?? 84;
+const navHeight = () => document.querySelector("header")?.offsetHeight ?? 96;
 
 function ZoomIcon(p: { className?: string }) {
   return (

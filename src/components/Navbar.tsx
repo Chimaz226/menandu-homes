@@ -45,7 +45,7 @@ export function Navbar() {
     >
       <Container className="flex h-[var(--nav-h)] items-center justify-between gap-6">
         <a href="#home" className="shrink-0" aria-label={`${site.company.name}, back to top`}>
-          <Image src={site.company.logo} alt={site.company.name} width={829} height={457} preload className="h-[68px] w-auto sm:h-[76px]" />
+          <Image src={site.company.logo} alt={site.company.name} width={829} height={457} preload className="h-20 w-auto sm:h-24" />
         </a>
 
         <nav aria-label="Main" className="hidden lg:block">
