@@ -73,10 +73,10 @@ export function Contact() {
 
       <footer className="bg-brand-primary-dark text-white/80">
         <Container className="flex flex-col gap-8 py-12 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-6">
             {/* Blue/black logo needs a light tile to read on the dark footer. */}
-            <span className="rounded-xl bg-white p-2">
-              <Image src={company.logo} alt={company.name} width={829} height={457} className="h-12 w-auto" />
+            <span className="shrink-0 rounded-2xl bg-white p-2.5 sm:p-3">
+              <Image src={company.logo} alt={company.name} width={829} height={457} className="h-16 w-auto sm:h-20" />
             </span>
             <div className="max-w-[18rem]">
               <p className="font-display font-bold text-white">{company.slogan}</p>
