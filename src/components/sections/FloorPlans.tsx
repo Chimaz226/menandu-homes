@@ -29,8 +29,8 @@ const siteFacts = [
   { name: "Homes in the row", size: "5" },
 ];
 
-/** Sticky nav height (Navbar.tsx h-[72px]); the control bar pins just below it. */
-const NAV_H = 72;
+/** Live height of the sticky nav (CSS var --nav-h in globals.css); the control bar pins just below it. */
+const navHeight = () => document.querySelector("header")?.offsetHeight ?? 84;
 
 function ZoomIcon(p: { className?: string }) {
   return (
@@ -119,7 +119,7 @@ export function FloorPlans() {
   const revealPanel = () => {
     const panel = stage.current;
     if (!panel) return;
-    const offset = NAV_H + (bar.current?.offsetHeight ?? 0) + 8;
+    const offset = navHeight() + (bar.current?.offsetHeight ?? 0) + 8;
     if (panel.getBoundingClientRect().top < offset) {
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       window.scrollTo({ top: window.scrollY + panel.getBoundingClientRect().top - offset, behavior: reduce ? "auto" : "smooth" });
@@ -168,7 +168,7 @@ export function FloorPlans() {
         <div
           ref={bar}
           className="sticky z-30 -mx-5 mt-8 flex flex-col gap-2 border-b border-black/5 bg-white/95 px-5 py-3 backdrop-blur sm:-mx-8 sm:px-8 lg:static lg:mx-0 lg:mt-10 lg:flex-row lg:items-center lg:justify-between lg:gap-4 lg:border-0 lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none"
-          style={{ top: NAV_H }}
+          style={{ top: "var(--nav-h)" }}
         >
           <div role="tablist" aria-label="Floor" className="grid grid-cols-4 gap-1.5 lg:flex lg:gap-2">
             {tabs.map((t, i) => (

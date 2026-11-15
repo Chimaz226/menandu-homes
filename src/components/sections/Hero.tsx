@@ -8,7 +8,7 @@ import { Container, EmailButton, WhatsAppButton } from "../ui";
 export function Hero() {
   const { project, renders } = site;
   return (
-    <section id="home" className="relative isolate flex min-h-[min(calc(100svh-72px),52rem)] items-end overflow-hidden md:min-h-[min(calc(100svh-112px),58rem)]">
+    <section id="home" className="relative isolate flex min-h-[min(calc(100svh-var(--nav-h)),52rem)] items-end overflow-hidden md:min-h-[min(calc(100svh-var(--nav-h)-40px),58rem)]">
       {/* Images are never hidden (the first is the LCP element); GSAP only parallaxes this layer. */}
       <div data-hero-bg className="absolute inset-0 -z-20 will-change-transform">
         <HeroSlideshow slides={renders.hero} />
