@@ -20,9 +20,18 @@
   --font-display: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
 }
 
+/*
+ * Dark mode on phones.
+ * Some browsers (e.g. Samsung Internet, in-app browsers) ignore "only light" and
+ * force-darken any page that has no dark theme of its own. They leave pages alone
+ * that declare dark-mode support, so the site declares "light dark" and its
+ * "dark theme" (the prefers-color-scheme block below) is the same light design.
+ * Every colour is set explicitly, so nothing falls back to dark browser defaults.
+ */
 html {
-  /* Light-only: stops phones in dark mode from auto-darkening the site (with the meta tag in layout.tsx). */
-  color-scheme: only light;
+  color-scheme: light dark;
+  background: #ffffff;
+  color: var(--color-brand-ink);
   scroll-behavior: smooth;
   /* Sticky nav height: the single source for everything that sits under the nav. */
   --nav-h: 96px;
@@ -58,4 +67,18 @@ html {
 body {
   background: #ffffff;
   color: var(--color-brand-ink);
+}
+
+/* Native dialogs default to the browser's dark canvas colours in dark mode. */
+dialog {
+  color: var(--color-brand-ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  /* Intentionally identical to light mode: the site keeps its own design in dark mode. */
+  html,
+  body {
+    background: #ffffff;
+    color: var(--color-brand-ink);
+  }
 }
