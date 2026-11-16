@@ -88,7 +88,7 @@ export function buildStructuredData() {
             accommodationCategory: "Terrace duplex",
             amenityFeature: [
               { "@type": "LocationFeatureSpecification", name: "Boys' Quarters (BQ)", value: true },
-              { "@type": "LocationFeatureSpecification", name: "Off-street parking", value: true },
+              { "@type": "LocationFeatureSpecification", name: "On-site parking (14 cars)", value: true },
             ],
             address,
           },

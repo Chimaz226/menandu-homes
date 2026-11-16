@@ -65,6 +65,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#024d87",
+  // Light-only design: opts out of browsers' automatic dark mode for websites.
+  colorScheme: "only light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

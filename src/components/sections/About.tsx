@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { formatNaira, site } from "@/content/site";
+import { ImageCycler } from "../ImageCycler";
 import { PricingPanel } from "../PricingPanel";
 import { Reveal } from "../Reveal";
 import { Container, SectionHeading } from "../ui";
@@ -36,14 +36,15 @@ export function About() {
 
           {/* Renders wipe open, then drift at different speeds while scrolling. */}
           <div className="grid grid-cols-2 gap-4 self-start">
-            {renders.about.map((r, i) => (
+            {renders.about.map((frame, i) => (
               <div
-                key={r.alt}
+                key={i}
                 data-clip
                 className={`relative aspect-[4/5] overflow-hidden rounded-3xl shadow-lg ring-1 ring-black/5 ${i === 1 ? "mt-12" : ""}`}
               >
                 <div data-parallax={i === 0 ? 8 : 14} className="absolute inset-x-0 -inset-y-[15%]">
-                  <Image src={r.src} alt={r.alt} fill placeholder="blur" sizes="(min-width: 1024px) 28vw, 50vw" quality={90} className="object-cover" />
+                  {/* Frames change 1.75s apart so they never switch together. */}
+                  <ImageCycler images={frame} interval={3500} delay={i * 1750} sizes="(min-width: 1024px) 28vw, 50vw" />
                 </div>
               </div>
             ))}

@@ -25,7 +25,7 @@ const siteFacts = [
   { name: "Building footprint", size: "34 × 8 m" },
   { name: "Front setback from access road", size: "9 m" },
   { name: "Side and rear margins", size: "3 m" },
-  { name: "On-site parking", size: "7 cars" },
+  { name: "On-site parking", size: "14 cars" },
   { name: "Homes in the row", size: "5" },
 ];
 

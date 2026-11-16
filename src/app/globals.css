@@ -21,6 +21,8 @@
 }
 
 html {
+  /* Light-only: stops phones in dark mode from auto-darkening the site (with the meta tag in layout.tsx). */
+  color-scheme: only light;
   scroll-behavior: smooth;
   /* Sticky nav height: the single source for everything that sits under the nav. */
   --nav-h: 96px;

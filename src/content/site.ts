@@ -125,9 +125,18 @@ export const site = {
       { src: endUnit05, alt: "View along the terrace from unit 05", position: "60% center" },
       { src: cornerCloseup, alt: "Fluted cladding and warm-lit balconies at unit 01", position: "65% center" },
     ],
+    /** Property Profile: two frames, each crossfading through its own renders */
     about: [
-      { src: aerialView, alt: "Aerial view of the five terrace homes with a paved, gated parking forecourt" },
-      { src: frontElevation, alt: "Front elevation of units 02 to 05, each with glass-balustrade balconies on two floors" },
+      [
+        { src: aerialView, alt: "Aerial view of the five terrace duplexes with a paved, gated parking forecourt" },
+        { src: endUnit01, alt: "Street-facing side of end unit 01, Chevy View Estate, Chevron" },
+        { src: cornerCloseup, alt: "Fluted cladding and warm-lit balconies of the Chevron terrace duplexes" },
+      ],
+      [
+        { src: frontElevation, alt: "Front elevation of units 02 to 05, each with glass-balustrade balconies on two floors" },
+        { src: endUnit05, alt: "View along the five terrace duplexes from unit 05, Lekki" },
+        { src: cornerView, alt: "Corner view of the terrace duplexes from unit 01, Chevy View Estate" },
+      ],
     ],
     gallery: [
       { src: cornerView, alt: "Corner view of the 4-bedroom terrace duplexes from unit 01, Chevy View Estate, Chevron" },
@@ -137,7 +146,7 @@ export const site = {
       { src: cornerCloseup, alt: "Close-up of the fluted cladding and balconies of the Chevron terrace duplexes" },
       { src: endUnit05, alt: "View along the five terrace duplexes from unit 05, Chevy View Estate, Lekki" },
     ],
-  } satisfies { hero: (Render & { position: string })[]; about: Render[]; gallery: Render[] },
+  } satisfies { hero: (Render & { position: string })[]; about: Render[][]; gallery: Render[] },
 
   about: {
     eyebrow: "Property Profile",
@@ -317,7 +326,7 @@ export const site = {
       },
       {
         q: "Is there parking?",
-        a: "Yes. The site plan provides off-street parking within the gated compound.",
+        a: "Yes. The gated compound has on-site parking for 14 cars.",
       },
       {
         q: "Can I inspect the property?",

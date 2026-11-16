@@ -10,10 +10,10 @@ gsap.registerPlugin(useGSAP);
 
 type Slide = { src: StaticImageData; alt: string; position: string };
 
-const INTERVAL_MS = 4000;
+const INTERVAL_MS = 3000;
 
 /**
- * Hero background slideshow: crossfade + slow Ken Burns zoom, autoplay every 4s.
+ * Hero background slideshow: crossfade + slow Ken Burns zoom, autoplay every 3s.
  * - Slides are mounted one ahead of the current one, so phones don't download every render up front.
  * - No autoplay or zoom under prefers-reduced-motion; pauses while the tab is hidden.
  * - Swipe left/right anywhere on the hero to change slide.
@@ -101,7 +101,7 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
               key={i}
               data-slide={i}
               aria-hidden={i !== index}
-              className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ease-out ${i === index ? "opacity-100" : "opacity-0"}`}
+              className={`absolute inset-0 overflow-hidden transition-opacity duration-500 ease-out ${i === index ? "opacity-100" : "opacity-0"}`}
             >
               <Image
                 src={s.src}

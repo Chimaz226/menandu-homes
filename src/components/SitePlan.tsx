@@ -23,7 +23,7 @@ function Car({ x, y, rotate = false }: { x: number; y: number; rotate?: boolean 
 
 export function SitePlan({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox={`-700 -150 ${W + 1000} ${H + 450}`} className={className} role="img" aria-label="Site plan: five terrace units in a row with parking along the front and side">
+    <svg viewBox={`-700 -150 ${W + 1000} ${H + 450}`} className={className} role="img" aria-label="Site plan: five terrace units in a row with parking for 14 cars">
       <rect x={0} y={0} width={W} height={H} fill="#f7f9fa" stroke={PRIMARY} strokeWidth={10} />
 
       {/* access road */}
@@ -32,13 +32,13 @@ export function SitePlan({ className = "" }: { className?: string }) {
         ACCESS ROAD
       </text>
 
-      {/* parking */}
-      {[0, 1, 2].map((i) => (
-        <Car key={`l${i}`} x={120 + i * 290} y={150} />
-      ))}
-      {[0, 1, 2, 3].map((i) => (
-        <Car key={`b${i}`} x={1300 + i * 750} y={BY + BH + 50} rotate />
-      ))}
+      {/* parking: 14 cars (client figure) — 2×3 in the front setback, 4 along each long side */}
+      {[150, 800].flatMap((y) =>
+        [0, 1, 2].map((i) => <Car key={`l${y}-${i}`} x={120 + i * 290} y={y} />),
+      )}
+      {[45, BY + BH + 50].flatMap((y) =>
+        [0, 1, 2, 3].map((i) => <Car key={`s${y}-${i}`} x={1300 + i * 750} y={y} rotate />),
+      )}
 
       {/* building, split into units */}
       {unitWidths.map((uw, i) => {
